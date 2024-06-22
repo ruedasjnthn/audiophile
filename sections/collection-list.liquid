@@ -1,0 +1,36 @@
+<div class='container mt-[7.5rem] flex justify-center gap-[1.875rem]'>
+    {% for collection in collections %}
+        <a
+            href='{{ collection.url }}'
+            class='group flex w-full flex-col items-center rounded-lg bg-[#F1F1F1] pb-[1.625rem]'
+        >
+            <div class='-translate-y-1/2'>
+                <img
+                    src='{{ collection.featured_image |  image_url  }}'
+                    alt=''
+                    width=''
+                    height=''
+                >
+            </div>
+            <h1 class='-mt-5 text-lg font-bold uppercase'>{{ collection.title }}</h1>
+            <div class='mt-4 flex items-center gap-x-3'>
+                <span class='text-sm font-bold uppercase text-black/50 group-hover:text-[#D87D4A]'>shop</span>
+                {% render 'icon-arrow-right' %}
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
+{% schema %}
+{
+    "name": "Collection List",
+    "limit": 1,
+    "settings": [],
+    "blocks": [],
+    "presets": [
+        {
+            "name": "Collection List"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,102 @@
+{% assign main_menu_linklist = linklists[section.settings.menu].links %}
+{% assign current_url = canonical_url | remove: shop.url %}
+
+<header class='relative {%  if current_url == routes.root_url  %}h-[100vh]{% endif %}'>
+    <nav class='{%  unless current_url == routes.root_url %}bg-black{% endunless %}'>
+        <div class='container'>
+            <div class='flex flex-row items-center justify-between border-b-[1px] border-white py-8'>
+                <div class='cursor-pointer md:hidden'>
+                    {% render 'icon-hamburger' %}
+                </div>
+                <div class='flex items-center justify-between md:w-[30%] lg:w-[70%] xl:w-[65%]'>
+                    <div class='hidden cursor-pointer md:block lg:hidden'>
+                        {% render 'icon-hamburger' %}
+                    </div>
+                    <div class='cursor-pointer'>
+                        {% render 'icon-logo' %}
+                    </div>
+                    <div class='hidden items-center gap-x-8 lg:flex'>
+                        {% for link in main_menu_linklist %}
+                            <a
+                                href='{{ link.url }}'
+                                class='text-sm font-bold uppercase text-white hover:cursor-pointer hover:text-[#D87D4A]'
+                            >
+                                {{- link.title -}}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class='cursor-pointer'>
+                    {% render 'icon-cart' %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% if current_url == routes.root_url %}
+        <div class='absolute top-0 z-[-1] h-full w-full'>
+            <img
+                class='h-full w-full'
+                src='{{ section.settings.featured_img |  image_url  }}'
+                alt=''
+                height=''
+                width=''
+            >
+        </div>
+        <div class='container'>
+            <div class=' mb-[10rem] mt-[6.8rem] flex max-w-[23.75rem] flex-col items-start text-white'>
+                <h2 class='text-sm uppercase tracking-[0.7em] text-white/50'>{{ section.settings.product_label }}</h2>
+                <h1 class='mt-6 text-[3.5rem] font-bold uppercase leading-none tracking-[0.035em]'>
+                    {{ section.settings.product.title }}
+                </h1>
+                <p class='mt-6 font-medium leading-relaxed'>{{ section.settings.product_desc }}</p>
+                <a
+                    class='mt-10 bg-[#D87D4A] px-8 py-4 text-sm font-bold uppercase hover:cursor-pointer hover:bg-[#FBAF85]'
+                    href='{{ section.settings.product.url }}'
+                >
+                    {{- section.settings.button_label -}}
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</header>
+
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Header Menu",
+            "default": "main-menu"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_img",
+            "label": "Featured Image"
+        },
+        {
+            "type": "product",
+            "id": "product",
+            "label": "Product Description"
+        },
+        {
+            "type": "text",
+            "id": "product_label",
+            "label": "Product Label"
+        },
+
+        {
+            "type": "text",
+            "id": "product_desc",
+            "label": "Product Description"
+        },
+        {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button Label",
+            "default": "see product"
+        }
+    ]
+}
+{% endschema %}

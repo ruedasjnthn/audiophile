@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "collection-list": {
+      "type": "collection-list",
+      "settings": {
+      }
+    },
+    "featured_columns_LXR6Bg": {
+      "type": "featured-columns",
+      "blocks": {
+        "full_column_zmPmgJ": {
+          "type": "full-column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/image-removebg-preview_38.png",
+            "product": "zx9-speaker",
+            "desc": "Upgrade to premium speakers that are phenomenally built to deliver truly remarkable sound.",
+            "btn_label": "see product"
+          }
+        },
+        "half_column_xkYKcV": {
+          "type": "half-column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/image-speaker-zx7.jpg",
+            "product": "zx7-speaker",
+            "btn_label": "see product"
+          }
+        },
+        "two_column_H8H9gx": {
+          "type": "two-column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/image-earphones-yx1.jpg",
+            "product": "yx1-wireless-earphones",
+            "title": "YX1 EARPHONES",
+            "btn_label": "see product"
+          }
+        }
+      },
+      "block_order": [
+        "full_column_zmPmgJ",
+        "half_column_xkYKcV",
+        "two_column_H8H9gx"
+      ],
+      "settings": {
+      }
+    },
+    "info_card_geCzXH": {
+      "type": "info-card",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "collection-list",
+    "featured_columns_LXR6Bg",
+    "info_card_geCzXH"
+  ]
+}

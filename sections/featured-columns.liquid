@@ -1,0 +1,161 @@
+<div class='container mt-[10.5rem] space-y-12'>
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'full-column' %}
+                <div
+                    class='relative flex h-[35rem] justify-between overflow-hidden rounded-lg bg-[#D87D4A] px-[7.25rem]'
+                >
+                    <div class='absolute -left-36 -top-12'>
+                        {% render 'pattern-circles' %}
+                    </div>
+                    <div class='z-10 flex items-end'>
+                        <img src='{{ block.settings.image |  image_url  }}' alt='' width='' height=''>
+                    </div>
+                    <div class='z-10 flex w-[21.8125rem] flex-col justify-center text-white'>
+                        <h1 class='text-[3.5rem] font-bold uppercase leading-none tracking-[0.035em]'>
+                            {{ block.settings.product.title }}
+                        </h1>
+                        <p class='mt-6 font-medium leading-relaxed'>{{ block.settings.desc }}</p>
+                        <a
+                            href='{{ block.settings.product.url }}'
+                            class='mt-10 w-max bg-black px-8 py-4 text-sm font-bold uppercase hover:cursor-pointer hover:bg-[#4C4C4C]'
+                        >
+                            {{- block.settings.btn_label -}}
+                        </a>
+                    </div>
+                </div>
+            {% when 'half-column' %}
+                <div
+                    style='background-image: url({{ block.settings.image |  image_url }})'
+                    class='flex h-[20rem] flex-col justify-center gap-y-8 rounded-lg bg-cover bg-no-repeat px-8'
+                >
+                    <h1 class='text-[1.75rem] font-bold uppercase leading-none tracking-[0.05em]'>
+                        {{ block.settings.product.title }}
+                    </h1>
+                    <a
+                        href='{{ block.settings.product.url }}'
+                        class='w-max border border-black bg-transparent px-8 py-4 text-sm font-bold uppercase hover:cursor-pointer hover:bg-black hover:text-white'
+                    >
+                        {{- block.settings.btn_label -}}
+                    </a>
+                </div>
+            {% when 'two-column' %}
+                <div class='flex h-[20rem] gap-x-8'>
+                    <img
+                        class='h-full w-full rounded-lg'
+                        src='{{ block.settings.image |  image_url  }}'
+                        alt=''
+                        width=''
+                        height=''
+                    >
+                    <div class='flex w-full flex-col justify-center gap-y-8 rounded-lg bg-[#F1F1F1] pl-[5.5%]'>
+                        <h1 class='text-[1.75rem] font-bold uppercase leading-none tracking-[0.05em]'>
+                            {% if block.settings.title == blank %}
+                                {{ block.settings.product.title }}
+                            {% else %}
+                                {{ block.settings.title }}
+                            {% endif %}
+                        </h1>
+                        <a
+                            href='{{ block.settings.product.url }}'
+                            class='w-max border border-black bg-transparent px-8 py-4 text-sm font-bold uppercase hover:cursor-pointer hover:bg-black hover:text-white'
+                        >
+                            {{- block.settings.btn_label -}}
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+
+        {% endcase %}
+    {% endfor %}
+</div>
+
+{% schema %}
+{
+    "name": "Featured Columns",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "full-column",
+            "name": "full-column",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "text",
+                    "id": "desc",
+                    "label": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_label",
+                    "label": "Button Label",
+                    "default": "see product"
+                }
+            ]
+        },
+        {
+            "type": "half-column",
+            "name": "half-column",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_label",
+                    "label": "Button Label",
+                    "default": "see product"
+                }
+            ]
+        },
+        {
+            "type": "two-column",
+            "name": "two-column",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_label",
+                    "label": "Button Label",
+                    "default": "see product"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Featured Columns"
+        }
+    ]
+}
+{% endschema %}
