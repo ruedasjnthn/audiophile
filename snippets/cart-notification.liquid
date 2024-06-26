@@ -1,0 +1,63 @@
+<cart-notification>
+    <div
+        id='cart-notification'
+        class='relative z-10 hidden'
+        aria-labelledby='modal-title'
+        role='dialog'
+        aria-modal='true'
+    >
+        <div class='fixed inset-0 bg-black bg-opacity-40 transition-opacity' aria-hidden='true'></div>
+
+        <div class='fixed inset-0 z-10 w-screen overflow-y-auto'>
+            <div class='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
+                <div class='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg'>
+                    <div class='bg-white p-8'>
+                        {% render 'icon-order-confirmation' %}
+                        <h1 class='mt-6 text-2xl font-bold uppercase'>added to cart</h1>
+                        <div class='mt-6 flex items-start rounded-lg bg-[#F1F1F1] p-6'>
+                            <img
+                                id='cart-notif__img'
+                                class='h-[3.125rem] w-[3.125rem]'
+                                src=''
+                                alt=''
+                                width=''
+                                height=''
+                            >
+                            <div class='min-w-max pl-4'>
+                                <h1 id='cart-notif__title' class='text-[0.9375rem] font-bold'></h1>
+                                <p id='cart-notif__price' class='text-sm font-bold'></p>
+                            </div>
+                            <p class='w-full pl-4 text-right text-[0.9375rem] font-bold' id='cart-notif__quantity'></p>
+                        </div>
+                        <div>
+                            <div class='mt-6 flex gap-x-4'>
+                                <button
+                                    type='button'
+                                    class='mx-auto w-1/2 bg-black py-4 text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:bg-[#4C4C4C]'
+                                >
+                                    close
+                                </button>
+                                <a
+                                    href='{{ routes.cart_url }}'
+                                    class='mx-auto w-1/2 border border-black bg-transparent py-4 text-center text-[0.8125rem] text-sm font-bold uppercase hover:cursor-pointer hover:bg-black hover:text-white'
+                                    >Cart</a
+                                >
+                            </div>
+
+                            <form action='{{ routes.cart_url }}' method='post' id='cart'>
+                                <button
+                                    type='submit'
+                                    name='checkout'
+                                    form='cart'
+                                    class='mt-4 flex w-full justify-center bg-[#D87D4A] py-4 text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:bg-[#FBAF85]'
+                                >
+                                    Checkout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</cart-notification>

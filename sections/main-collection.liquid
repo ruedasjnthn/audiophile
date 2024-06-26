@@ -1,0 +1,50 @@
+<div class='container mt-16 space-y-28 md:space-y-[7.5rem] lg:mt-40 lg:space-y-40'>
+    {% for product in collection.products %}
+        {% assign is_even = forloop.index | modulo: 2 %}
+        <div class='lg:flex lg:items-center lg:justify-between {% if is_even == 0 %}lg:flex-row-reverse{% endif %}'>
+            <img
+                class='h-[22rem] w-full rounded-lg lg:h-[35rem] lg:w-[33.75rem]'
+                src='{{ product.featured_image |  image_url  }}'
+                alt=''
+                width=''
+                height=''
+            >
+            <div class='mx-auto mt-8 flex flex-col items-center text-center md:mt-[3.25rem] md:w-[35.75rem] lg:mx-0 lg:mt-0 lg:w-[27.8125rem] lg:items-start lg:text-left'>
+                {% if product.tags contains 'new' %}
+                    <h2 class='mb-6 text-sm uppercase tracking-[0.7em] text-[#D87D4A] md:mb-4 lg:text-base'>
+                        New Product
+                    </h2>
+                {% endif %}
+                <h1 class='text-[1.75rem] font-bold uppercase md:text-[2.5rem]'>{{ product.title }}</h1>
+                <h3 class='mt-6 max-w-[35.75rem] text-[0.9375rem] font-medium leading-relaxed text-black/50 md:mt-8'>
+                    {{ product.description }}
+                </h3>
+                <a
+                    class='mt-6 w-auto bg-[#D87D4A] px-8 py-4 text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:bg-[#FBAF85] lg:mt-10'
+                    href='{{ product.url }}'
+                >
+                    {{ section.settings.button_label }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% schema %}
+{
+    "name": "Main Collection",
+    "settings": [
+        {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button Label",
+            "default": "see product"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collection"
+        }
+    ]
+}
+{% endschema %}

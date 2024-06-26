@@ -1,9 +1,68 @@
-<div class='container'>info card</div>
+{% assign title = section.settings.title | split: section.settings.highlighted_title %}
+
+<div class='container mt-28 space-y-10 text-center md:space-y-16 lg:mt-[12.5rem] lg:flex lg:h-[36.75rem] lg:flex-row-reverse lg:justify-between lg:space-y-0 lg:text-left'>
+    <picture>
+        <source media='(min-width: 1024px)' srcset='{{ section.settings.image |  image_url  }}'>
+        <source media='(min-width: 1024px)' srcset='{{ section.settings.image |  image_url  }}'>
+        <img
+            class='h-[18.75rem] w-full rounded-lg lg:ml-auto lg:h-full lg:w-4/5 xl:w-full'
+            src='{{ section.settings.image_mobile |  image_url  }}'
+            alt=''
+            width=''
+            height=''
+        >
+    </picture>
+    <div class='mx-auto flex flex-col justify-center gap-y-8 md:max-w-[35.8125rem] lg:mx-0 lg:max-w-[27.8125rem]'>
+        <h1 class='text-[1.75rem] font-bold uppercase leading-none tracking-[0.035em] md:text-[2.5rem]'>
+            {{ title[0] }}
+            <span class='text-[#D87D4A]'>
+                {{- section.settings.highlighted_title }}
+            </span>
+            {{ title[1] }}
+        </h1>
+        <p class='text-[0.9375rem] font-medium leading-relaxed text-black/50'>
+            {{ section.settings.desc }}
+        </p>
+    </div>
+</div>
 
 {% schema %}
 {
     "name": "Info Card",
-    "settings": [],
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_mobile",
+            "label": "Image Mobile"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_tablet",
+            "label": "Image Tablet"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "bringing you the best audio gear"
+        },
+        {
+            "type": "text",
+            "id": "highlighted_title",
+            "label": "Highlighted Title Text",
+            "default": "best"
+        },
+        {
+            "type": "text",
+            "id": "desc",
+            "label": "Description"
+        }
+    ],
     "presets": [
         {
             "name": "Info Card"

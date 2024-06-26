@@ -1,10 +1,10 @@
 {% assign main_menu_linklist = linklists[section.settings.menu].links %}
 {% assign current_url = canonical_url | remove: shop.url %}
 
-<header class='relative {%  if current_url == routes.root_url  %}h-[100vh]{% endif %}'>
-    <nav class='{%  unless current_url == routes.root_url %}bg-black{% endunless %}'>
+<header class='relative flex flex-col {%  if current_url == routes.root_url  %} lg:h-[100vh] {% endif %}'>
+    <nav class='{%  if current_url == routes.root_url %}border-b border-white/10 md:border-none{% else %}bg-black{% endif %} z-50'>
         <div class='container'>
-            <div class='flex flex-row items-center justify-between border-b-[1px] border-white py-8'>
+            <div class='flex flex-row items-center justify-between py-8 {%  if current_url == routes.root_url %}md:border-b md:border-white/10{% endif %}'>
                 <div class='cursor-pointer md:hidden'>
                     {% render 'icon-hamburger' %}
                 </div>
@@ -19,38 +19,44 @@
                         {% for link in main_menu_linklist %}
                             <a
                                 href='{{ link.url }}'
-                                class='text-sm font-bold uppercase text-white hover:cursor-pointer hover:text-[#D87D4A]'
+                                class='text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:text-[#D87D4A]'
                             >
                                 {{- link.title -}}
                             </a>
                         {% endfor %}
                     </div>
                 </div>
-                <div class='cursor-pointer'>
+                <a href='{{ routes.cart_url }}' class='cursor-pointer'>
                     {% render 'icon-cart' %}
-                </div>
+                </a>
             </div>
         </div>
     </nav>
     {% if current_url == routes.root_url %}
         <div class='absolute top-0 z-[-1] h-full w-full'>
-            <img
-                class='h-full w-full'
-                src='{{ section.settings.featured_img |  image_url  }}'
-                alt=''
-                height=''
-                width=''
-            >
+            <picture>
+                <source media='(min-width:1024px)' srcset='{{ section.settings.featured_img |  image_url  }}'>
+                <source media='(min-width:768px)' srcset='{{ section.settings.featured_img_tablet |  image_url  }}'>
+                <img
+                    class='h-full w-full'
+                    src='{{ section.settings.featured_img_mobile |  image_url  }}'
+                    alt=''
+                    height=''
+                    width=''
+                >
+            </picture>
         </div>
-        <div class='container'>
-            <div class=' mb-[10rem] mt-[6.8rem] flex max-w-[23.75rem] flex-col items-start text-white'>
+        <div class='container flex h-full justify-center lg:items-center lg:justify-start'>
+            <div class='mb-[10rem] mt-[6.75rem] flex max-w-[23.75rem] flex-col items-center text-white md:mb-[12rem] md:mt-[7.875rem] lg:my-0 lg:items-start'>
                 <h2 class='text-sm uppercase tracking-[0.7em] text-white/50'>{{ section.settings.product_label }}</h2>
-                <h1 class='mt-6 text-[3.5rem] font-bold uppercase leading-none tracking-[0.035em]'>
+                <h1 class='mt-4 text-center text-4xl font-bold uppercase leading-none tracking-[0.035em] lg:mt-6 lg:text-left lg:text-[3.5rem]'>
                     {{ section.settings.product.title }}
                 </h1>
-                <p class='mt-6 font-medium leading-relaxed'>{{ section.settings.product_desc }}</p>
+                <p class='mt-6 text-center text-[0.9375rem] font-medium leading-relaxed lg:text-left'>
+                    {{ section.settings.product_desc }}
+                </p>
                 <a
-                    class='mt-10 bg-[#D87D4A] px-8 py-4 text-sm font-bold uppercase hover:cursor-pointer hover:bg-[#FBAF85]'
+                    class='mt-7 bg-[#D87D4A] px-8 py-4 text-[0.8125rem] font-bold uppercase hover:cursor-pointer hover:bg-[#FBAF85] lg:mt-10'
                     href='{{ section.settings.product.url }}'
                 >
                     {{- section.settings.button_label -}}
@@ -74,6 +80,16 @@
             "type": "image_picker",
             "id": "featured_img",
             "label": "Featured Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_img_mobile",
+            "label": "Featured Image Mobile"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_img_tablet",
+            "label": "Featured Image Tablet"
         },
         {
             "type": "product",

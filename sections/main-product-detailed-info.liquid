@@ -1,0 +1,25 @@
+<section class='container mt-[5.5rem] md:mt-[7.5rem] xl:flex xl:gap-x-[7.8125rem]'>
+    <div class='xl:w-[39.6875rem]'>
+        <h1 class='text-2xl font-bold uppercase md:text-[2rem]'>features</h1>
+        <div class='mt-6 space-y-8 text-[0.9375rem] font-medium text-black/50 md:mt-8'>
+            {% for item in product.metafields.custom.features.value %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class='mt-[5.5rem] md:mt-[7.5rem] md:flex md:gap-x-[10.5rem] xl:mt-0 xl:block xl:w-[21.875rem]'>
+        <h1 class='text-[2rem] font-bold uppercase'>in the box</h1>
+        <div class='mt-6 space-y-2 md:mt-0 xl:mt-8'>
+            {% for inclusive in product.metafields.custom.inclusive.value %}
+                {% liquid
+                    assign item = inclusive | split: '--'
+                    assign item_count = item[0]
+                    assign item_name = item[1]
+                %}
+                <p class='text-[0.9375rem] font-medium text-black/50'>
+                    <span class='mr-6 font-bold text-[#D87D4A]'>{{ item_count }}x</span>{{ item_name }}
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</section>

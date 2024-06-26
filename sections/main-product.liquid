@@ -1,0 +1,79 @@
+<script src='{{ 'cart-notification.js' | asset_url }}' defer='defer'></script>
+<script src='{{ 'product-form.js' | asset_url }}' defer='defer'></script>
+
+<section class='container'>
+    <button onclick='history.back()' class='mt-4 text-[0.9375rem] font-medium text-black/50 md:mt-8'>Go Back</button>
+    <div class='mt-14 md:flex md:items-center md:justify-between'>
+        <img
+            class='h-[20.5rem] w-full rounded-lg md:h-[30rem] md:w-[17.5rem] lg:h-[35rem] lg:w-[33.75rem]'
+            src='{{ product.featured_image |  image_url  }}'
+            alt=''
+            width=''
+            height=''
+        >
+        <product-form>
+            {% form 'product', product, id: "{{'product-form-' | append: section.id}}", novalidate: 'novalidate' %}
+                <input type='hidden' name='id' value='{{ product.first_available_variant.id}}'>
+                <div class='mt-8 flex flex-col items-start md:mt-0  md:w-[21.25rem] md:items-start xl:w-[27.8125rem]'>
+                    {% if product.tags contains 'new' %}
+                        <h2 class='mb-6 text-sm uppercase tracking-[0.7em] text-[#D87D4A] md:mb-4 md:text-xs lg:text-base'>
+                            New Product
+                        </h2>
+                    {% endif %}
+                    <h1 class='text-[1.75rem] font-bold uppercase md:text-[1.75rem] lg:text-[2.5rem]'>
+                        {{ product.title }}
+                    </h1>
+                    <h3 class='mt-6 max-w-[35.75rem] text-[0.9375rem] font-medium leading-relaxed text-black/50 md:mt-8'>
+                        {{ product.description }}
+                    </h3>
+                    <p class='mt-6 text-lg font-bold md:mt-8'>
+                        {{ product.price | money_without_trailing_zeros }}
+                    </p>
+                    <div class='mt-8 flex h-12 items-center gap-x-4 lg:mt-12'>
+                        <quantity-input class='flex h-full w-[7.5rem] items-center justify-around bg-[#F1F1F1]'>
+                            <button
+                                type='button'
+                                name='minus'
+                                class='w-4 text-center text-[0.8125rem] font-bold text-black/25'
+                            >
+                                -
+                            </button>
+                            <input
+                                type='number'
+                                name='quantity'
+                                min='1'
+                                value='1'
+                                class='flex w-8 bg-transparent text-center'
+                            >
+                            <button
+                                type='button'
+                                name='plus'
+                                class='w-4 text-center text-[0.8125rem] font-bold text-black/25'
+                            >
+                                +
+                            </button>
+                        </quantity-input>
+                        <input
+                            type='submit'
+                            value='Add to cart'
+                            class='flex h-full w-auto items-center bg-[#D87D4A] px-8 text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:bg-[#FBAF85]'
+                        >
+                    </div>
+                </div>
+            {% endform %}
+        </product-form>
+    </div>
+    {% render 'cart-notification' %}
+</section>
+
+{% schema %}
+{
+    "name": "Product",
+    "settings": [],
+    "presets": [
+        {
+            "name": "Product"
+        }
+    ]
+}
+{% endschema %}

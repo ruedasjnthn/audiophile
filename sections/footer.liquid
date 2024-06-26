@@ -1,8 +1,65 @@
-<div class='container mt-[7.5rem]'></div>
+{% assign main_menu_linklist = linklists[section.settings.menu].links %}
+
+<footer class='mt-[7.5rem] bg-black text-white'>
+    <div class='container pb-9 pt-[3.25rem] md:pb-12 md:pt-[4rem] lg:pb-[3.5rem] lg:pt-[4.75rem]'>
+        <div class='flex flex-col items-center gap-y-12 md:items-start md:gap-y-8 lg:flex-row lg:items-center lg:justify-between lg:gap-y-[2.125rem]'>
+            {% render 'icon-logo' %}
+            <div class='flex flex-col items-center gap-y-4 md:flex-row md:gap-x-8 md:gap-y-0'>
+                {% for link in main_menu_linklist %}
+                    <a
+                        href='{{ link.url }}'
+                        class='text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:text-[#D87D4A]'
+                    >
+                        {{- link.title -}}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class='mt-12 items-center justify-between md:mt-8 lg:mt-9 lg:flex'>
+            <div class='text-center md:text-left'>
+                <p class='text-[0.9375rem] font-medium text-white/50 lg:max-w-[33.75rem]'>
+                    Audiophile is an all in one stop to fulfill your audio needs. We're a small team of music lovers and
+                    sound specialists who are devoted to helping you get the most out of personal audio. Come and visit
+                    our demo facility - we’re open 7 days a week.
+                </p>
+                <p class='mt-14 hidden text-[0.9375rem] font-bold text-white/50 lg:block'>
+                    Copyright 2021. All Rights Reserved
+                </p>
+            </div>
+            <div class='mt-12 flex flex-col items-center gap-y-12 md:mt-20 md:flex-row md:justify-between lg:mt-0'>
+                <p class='text-[0.9375rem] font-bold text-white/50 lg:hidden'>Copyright 2021. All Rights Reserved</p>
+                <ul class='flex items-center justify-center gap-x-4 fill-white'>
+                    <li>
+                        <a class='hover:fill-[#D87D4A]' href='{{ settings.social_facebook_link }}'>
+                            {% render 'icon-facebook' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a class='hover:fill-[#D87D4A]' href='{{ settings.social_twitter_link }}'>
+                            {% render 'icon-twitter' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a class='hover:fill-[#D87D4A]' href='{{ settings.social_instagram_link }}'>
+                            {% render 'icon-instagram' %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 
 {% schema %}
 {
     "name": "Footer",
-    "settings": []
+    "settings": [
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Footer Menu",
+            "default": "footer"
+        }
+    ]
 }
 {% endschema %}
