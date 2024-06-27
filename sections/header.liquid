@@ -2,18 +2,24 @@
 {% assign current_url = canonical_url | remove: shop.url %}
 
 <header class='relative flex flex-col {%  if current_url == routes.root_url  %} lg:h-[100vh] {% endif %}'>
-    <nav class='{%  if current_url == routes.root_url %}border-b border-white/10 md:border-none{% else %}bg-black{% endif %} z-50'>
-        <div class='container'>
+    <nav
+        x-data='{ mobileMenuOpen: false }'
+        class='relative {%  if current_url == routes.root_url %}border-b border-white/10 md:border-none{% else %}bg-black{% endif %}'
+    >
+        <div class='container relative z-50'>
             <div class='flex flex-row items-center justify-between py-8 {%  if current_url == routes.root_url %}md:border-b md:border-white/10{% endif %}'>
-                <div class='cursor-pointer md:hidden'>
+                <div x-on:click='mobileMenuOpen = ! mobileMenuOpen' class='cursor-pointer md:hidden'>
                     {% render 'icon-hamburger' %}
                 </div>
                 <div class='flex items-center justify-between md:w-[30%] lg:w-[70%] xl:w-[65%]'>
-                    <div class='hidden cursor-pointer md:block lg:hidden'>
+                    <div
+                        x-on:click='mobileMenuOpen = ! mobileMenuOpen'
+                        class='hidden cursor-pointer md:block lg:hidden'
+                    >
                         {% render 'icon-hamburger' %}
                     </div>
                     <div class='cursor-pointer'>
-                        {% render 'icon-logo' %}
+                        <a href='{{ routes.root_url }}'>{% render 'icon-logo' %}</a>
                     </div>
                     <div class='hidden items-center gap-x-8 lg:flex'>
                         {% for link in main_menu_linklist %}
@@ -31,7 +37,16 @@
                 </a>
             </div>
         </div>
+
+        {% comment %} mobile nav {% endcomment %}
+        <div x-cloak x-show='mobileMenuOpen' class='lg:hidden'>
+            <div class='fixed inset-0 z-20 bg-black bg-opacity-40 transition-opacity' aria-hidden='true'></div>
+            <div class='absolute left-0 top-full z-50 w-full rounded-b-lg bg-white pb-16'>
+                {% render 'collection-list' %}
+            </div>
+        </div>
     </nav>
+
     {% if current_url == routes.root_url %}
         <div class='absolute top-0 z-[-1] h-full w-full'>
             <picture>

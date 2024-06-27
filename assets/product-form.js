@@ -27,18 +27,6 @@ if (!customElements.get('product-form')) {
                 delete config.headers['Content-Type']
 
                 const formData = new FormData(this.form)
-                // if (this.cartNotification) {
-                //     formData.append(
-                //         'sections',
-                //         this.cartNotification
-                //             .getSectionsToRender()
-                //             .map((section) => section.id)
-                //     )
-                //     formData.append('sections_url', window.location.pathname)
-                //     this.cartNotification.setActiveElement(
-                //         document.activeElement
-                //     )
-                // }
                 config.body = formData
                 fetch(window.Shopify.routes.root + 'cart/add.js', config)
                     .then((response) => {

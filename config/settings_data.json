@@ -6,6 +6,8 @@
         "settings": {
           "menu": "main-menu",
           "featured_img": "shopify:\/\/shop_images\/image-hero.jpg",
+          "featured_img_mobile": "shopify:\/\/shop_images\/image-header.jpg",
+          "featured_img_tablet": "shopify:\/\/shop_images\/image-header_c96a4763-3e49-4cd8-bbb2-bf179591d52a.jpg",
           "product": "xx99-mark-ii-headphones",
           "product_label": "new product",
           "product_desc": "Experience natural, lifelike audio and exceptional build quality made for the passionate music enthusiast.",
@@ -15,6 +17,7 @@
       "footer": {
         "type": "footer",
         "settings": {
+          "menu": "footer"
         }
       }
     },

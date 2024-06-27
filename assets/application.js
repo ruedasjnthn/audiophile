@@ -23,24 +23,6 @@ class QuantityInput extends HTMLElement {
 
 customElements.define('quantity-input', QuantityInput)
 
-const serializeForm = (form) => {
-    const obj = {}
-    const formData = new FormData(form)
-
-    for (const key of formData.keys()) {
-        const regex = /(?:^(properties\[))(.*?)(?:\]$)/
-
-        if (regex.test(key)) {
-            obj.properties = obj.properties || {}
-            obj.properties[regex.exec(key)[2]] = formData.get(key)
-        } else {
-            obj[key] = formData.get(key)
-        }
-    }
-
-    return JSON.stringify(obj)
-}
-
 function fetchConfig(type = 'json') {
     return {
         method: 'POST',
@@ -48,5 +30,13 @@ function fetchConfig(type = 'json') {
             'Content-Type': 'application/json',
             Accept: `application/${type}`,
         },
+    }
+}
+
+function debounce(fn, wait) {
+    let t
+    return (...args) => {
+        clearTimeout(t)
+        t = setTimeout(() => fn.apply(this, args), wait)
     }
 }

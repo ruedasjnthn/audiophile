@@ -1,0 +1,45 @@
+<section class='container'>
+    <div class='mt-8'>
+        <form action='{{ routes.search_url }}'>
+            <div class='flex h-14 items-center gap-x-2'>
+                <input
+                    type='text'
+                    placeholder='Search'
+                    name='q'
+                    value='{{ search.terms | escape }}'
+                    class='h-full border-none bg-transparent px-6 outline-none ring-1 ring-inset ring-[#CFCFCF] placeholder:text-black/40 focus:ring-2 focus:ring-inset focus:ring-[#D87D4A]'
+                >
+                <input
+                    type='submit'
+                    value='Search'
+                    class='h-full bg-[#D87D4A] px-8 text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:bg-[#FBAF85]'
+                >
+            </div>
+        </form>
+    </div>
+    <div class='mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>
+        {% for item in search.results %}
+            <div class='group relative'>
+                <div class='aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75 lg:h-80'>
+                    <img
+                        src='{{ item.featured_image |  image_url  }}'
+                        class='h-full w-full object-cover object-center lg:h-full lg:w-full'
+                        width=''
+                        height=''
+                    >
+                </div>
+                <div class='mt-4 flex justify-between'>
+                    <div>
+                        <h3 class='text-sm text-black'>
+                            <a href='{{ item.url }}'>
+                                <span aria-hidden='true' class='absolute inset-0'></span>
+                                {{ item.title }}
+                            </a>
+                        </h3>
+                        <p class='mt-1 text-sm text-black/50'>{{ item.price }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
