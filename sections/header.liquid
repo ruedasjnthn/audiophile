@@ -3,7 +3,7 @@
 
 <header class='relative flex flex-col {%  if current_url == routes.root_url  %} lg:h-[100vh] {% endif %}'>
     <nav
-        x-data='{ mobileMenuOpen: false }'
+        x-data='{ mobileMenuOpen: false, cartModal: false }'
         class='relative {%  if current_url == routes.root_url %}border-b border-white/10 md:border-none{% else %}bg-black{% endif %}'
     >
         <div class='container relative z-50'>
@@ -32,9 +32,14 @@
                         {% endfor %}
                     </div>
                 </div>
-                <a href='{{ routes.cart_url }}' class='cursor-pointer'>
+                {% comment %}
+                    <a href='{{ routes.cart_url }}' class='cursor-pointer'>
+                        {% render 'icon-cart' %}
+                    </a>
+                {% endcomment %}
+                <div x-on:click='cartModal = ! cartModal' class='cursor-pointer'>
                     {% render 'icon-cart' %}
-                </a>
+                </div>
             </div>
         </div>
 
@@ -45,6 +50,9 @@
                 {% render 'collection-list' %}
             </div>
         </div>
+
+        {% comment %} cart modal {% endcomment %}
+        {% render 'cart-modal' %}
     </nav>
 
     {% if current_url == routes.root_url %}
@@ -63,19 +71,31 @@
         </div>
         <div class='container flex h-full justify-center lg:items-center lg:justify-start'>
             <div class='mb-[10rem] mt-[6.75rem] flex max-w-[23.75rem] flex-col items-center text-white md:mb-[12rem] md:mt-[7.875rem] lg:my-0 lg:items-start'>
-                <h2 class='text-sm uppercase tracking-[0.7em] text-white/50'>{{ section.settings.product_label }}</h2>
-                <h1 class='mt-4 text-center text-4xl font-bold uppercase leading-none tracking-[0.035em] lg:mt-6 lg:text-left lg:text-[3.5rem]'>
-                    {{ section.settings.product.title }}
-                </h1>
-                <p class='mt-6 text-center text-[0.9375rem] font-medium leading-relaxed lg:text-left'>
-                    {{ section.settings.product_desc }}
-                </p>
-                <a
-                    class='mt-7 bg-[#D87D4A] px-8 py-4 text-[0.8125rem] font-bold uppercase hover:cursor-pointer hover:bg-[#FBAF85] lg:mt-10'
-                    href='{{ section.settings.product.url }}'
-                >
-                    {{- section.settings.button_label -}}
-                </a>
+                {% for block in section.blocks %}
+                    {% case block.type %}
+                        {% when 'product_label' %}
+                            <h2 class='text-sm uppercase tracking-[0.7em] text-white/50'>
+                                {{ section.settings.product_label }}
+                            </h2>
+                        {% when 'heading' %}
+                            <h1 class='mt-4 text-center text-4xl font-bold uppercase leading-none tracking-[0.035em] lg:mt-6 lg:text-left lg:text-[3.5rem]'>
+                                {{ section.settings.product.title }}
+                            </h1>
+                        {% when 'description' %}
+                            <p class='mt-6 text-center text-[0.9375rem] font-medium leading-relaxed lg:text-left'>
+                                {{ block.settings.description }}
+                            </p>
+                        {% when 'button' %}
+                            <a
+                                class='mt-7 bg-[#D87D4A] px-8 py-4 text-[0.8125rem] font-bold uppercase hover:cursor-pointer hover:bg-[#FBAF85] lg:mt-10'
+                                href='{{ section.settings.product.url }}'
+                            >
+                                {{- block.settings.button_label -}}
+                            </a>
+                        {% else %}
+
+                    {% endcase %}
+                {% endfor %}
             </div>
         </div>
     {% endif %}
@@ -109,24 +129,46 @@
         {
             "type": "product",
             "id": "product",
-            "label": "Product Description"
+            "label": "Product"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "heading",
+            "name": "Heading"
         },
         {
-            "type": "text",
-            "id": "product_label",
-            "label": "Product Label"
+            "type": "description",
+            "name": "Description",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
         },
-
         {
-            "type": "text",
-            "id": "product_desc",
-            "label": "Product Description"
+            "type": "product_label",
+            "name": "Product Label",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "product_label",
+                    "label": "Product Label"
+                }
+            ]
         },
         {
-            "type": "text",
-            "id": "button_label",
-            "label": "Button Label",
-            "default": "see product"
+            "type": "button",
+            "name": "Button",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "button_label",
+                    "label": "Button Label"
+                }
+            ]
         }
     ]
 }

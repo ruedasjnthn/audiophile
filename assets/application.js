@@ -23,6 +23,56 @@ class QuantityInput extends HTMLElement {
 
 customElements.define('quantity-input', QuantityInput)
 
+class VariantSelects extends HTMLElement {
+    constructor() {
+        super()
+    }
+
+    connectedCallback() {
+        this.querySelectorAll('#options')[0].classList.add(
+            'ring-1',
+            'ring-black',
+            'ring-offset-2'
+        )
+        this.querySelectorAll('input[type="radio"]')[0].checked = true
+        this.querySelectorAll('input[type="radio"]').forEach((radio) => {
+            radio.addEventListener('change', this.updateSwatch.bind(this))
+        })
+    }
+
+    updateSwatch(event) {
+        const radioButtons = this.querySelectorAll('input[type="radio"]')
+        const options = this.querySelectorAll('#options')
+        const variantDataElement = JSON.parse(
+            this.querySelector(`script[type="application/json"]`).textContent
+        ).find((variant) => variant.title === event.target.value)
+
+        radioButtons.forEach((radio, index) => {
+            if (radio.value === event.target.value) {
+                radio.checked = true
+                options[index].classList.add(
+                    'ring-1',
+                    'ring-black',
+                    'ring-offset-2'
+                )
+            } else {
+                radio.checked = false
+                options[index].classList.remove(
+                    'ring-1',
+                    'ring-black',
+                    'ring-offset-2'
+                )
+            }
+        })
+        this.querySelector('#variant-name').innerHTML =
+            `Color: ${event.target.value}`
+        document.querySelector('#variant-input-id').value =
+            variantDataElement.id
+    }
+}
+
+customElements.define('variant-selects', VariantSelects)
+
 function fetchConfig(type = 'json') {
     return {
         method: 'POST',

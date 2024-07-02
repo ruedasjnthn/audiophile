@@ -18,14 +18,22 @@ class CartNotification extends HTMLElement {
     }
 
     renderContents(parsedState) {
-        const { product_title, image, final_price, quantity } = parsedState
+        console.log(parsedState)
+        const {
+            product_title,
+            image,
+            final_price,
+            quantity,
+            options_with_values,
+        } = parsedState
         const shortenTitle = product_title.split(' ').slice(0, -1).join(' ')
-        document.getElementById('cart-notif__title').innerHTML = shortenTitle
-        document.getElementById('cart-notif__img').src = image
-        document.getElementById('cart-notif__price').innerHTML =
+        this.querySelector('#cart-notif__title').innerHTML = shortenTitle
+        this.querySelector('#cart-notif__img').src = image
+        this.querySelector('#cart-notif__variant').innerHTML =
+            options_with_values[0].value
+        this.querySelector('#cart-notif__price').innerHTML =
             `$${Math.floor(final_price / 100).toLocaleString()}`
-        document.getElementById('cart-notif__quantity').innerHTML =
-            `x${quantity}`
+        this.querySelector('#cart-notif__quantity').innerHTML = `x${quantity}`
         this.open()
     }
 

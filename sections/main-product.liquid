@@ -13,7 +13,7 @@
         >
         <product-form>
             {% form 'product', product, id: "{{'product-form-' | append: section.id}}", novalidate: 'novalidate' %}
-                <input type='hidden' name='id' value='{{ product.first_available_variant.id}}'>
+                <input type='hidden' id='variant-input-id' name='id' value='{{ product.first_available_variant.id}}'>
                 <div class='mt-8 flex flex-col items-start md:mt-0  md:w-[21.25rem] md:items-start xl:w-[27.8125rem]'>
                     {% if product.tags contains 'new' %}
                         <h2 class='mb-6 text-sm uppercase tracking-[0.7em] text-[#D87D4A] md:mb-4 md:text-xs lg:text-base'>
@@ -26,6 +26,43 @@
                     <h3 class='mt-6 max-w-[35.75rem] text-[0.9375rem] font-medium leading-relaxed text-black/50 md:mt-8'>
                         {{ product.description }}
                     </h3>
+                    <variant-selects>
+                        <h3
+                            id='variant-name'
+                            class='mt-6 text-[0.9375rem] font-medium leading-relaxed text-black/50 md:mt-8'
+                        >
+                            Color: {{ product.options_with_values[0].values[0].name }}
+                        </h3>
+                        <div class='mt-4'>
+                            {% for option in product.options_with_values %}
+                                <div class='flex gap-x-4'>
+                                    {% for option_value in option.values %}
+                                        <label
+                                            for='{{ option_value.id }}'
+                                            class='relative h-full w-full'
+                                        >
+                                            <div
+                                                id='options'
+                                                style='background-color : rgba({{ option_value.swatch.color.rgba }})'
+                                                class='ring=1 h-7 w-7 rounded-full border-2 border-black/20 outline-none ring-black ring-offset-2 hover:ring-1 hover:ring-black hover:ring-offset-2'
+                                            ></div>
+                                            <input
+                                                type='radio'
+                                                name=''
+                                                variant-id='{{ option_value.variant.id }}'
+                                                id='{{ option_value.id }}'
+                                                value='{{ option_value.name }}'
+                                                class='absolute h-0 w-0'
+                                            >
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <script type='application/json'>
+                            {{ product.variants | json }}
+                        </script>
+                    </variant-selects>
                     <p class='mt-6 text-lg font-bold md:mt-8'>
                         {{ product.price | money_without_trailing_zeros }}
                     </p>
@@ -34,7 +71,7 @@
                             <button
                                 type='button'
                                 name='minus'
-                                class='w-4 text-center text-[0.8125rem] font-bold text-black/25'
+                                class='text-_0.8125rem] w-4 text-center font-bold text-black/25'
                             >
                                 -
                             </button>

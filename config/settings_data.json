@@ -1,8 +1,42 @@
 {
   "current": {
+    "social_twitter_link": "https:\/\/twitter.com\/shopify",
+    "social_facebook_link": "https:\/\/facebook.com\/shopify",
+    "social_instagram_link": "http:\/\/instagram.com\/shopify",
     "sections": {
       "header": {
         "type": "header",
+        "blocks": {
+          "product_label_4wGPjG": {
+            "type": "product_label",
+            "settings": {
+              "product_label": ""
+            }
+          },
+          "heading_FmKhhz": {
+            "type": "heading",
+            "settings": {
+            }
+          },
+          "description_Gg3azX": {
+            "type": "description",
+            "settings": {
+              "description": "Experience natural, lifelike audio and exceptional build quality made for the passionate music enthusiast."
+            }
+          },
+          "button_7Tj9Lp": {
+            "type": "button",
+            "settings": {
+              "button_label": "see product"
+            }
+          }
+        },
+        "block_order": [
+          "product_label_4wGPjG",
+          "heading_FmKhhz",
+          "description_Gg3azX",
+          "button_7Tj9Lp"
+        ],
         "settings": {
           "menu": "main-menu",
           "featured_img": "shopify:\/\/shop_images\/image-hero.jpg",

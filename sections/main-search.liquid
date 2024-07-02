@@ -36,7 +36,7 @@
                                 {{ item.title }}
                             </a>
                         </h3>
-                        <p class='mt-1 text-sm text-black/50'>{{ item.price }}</p>
+                        <p class='mt-1 text-sm text-black/50'>{{ item.price | money_without_trailing_zeros }}</p>
                     </div>
                 </div>
             </div>

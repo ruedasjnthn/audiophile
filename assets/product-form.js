@@ -12,6 +12,7 @@ if (!customElements.get('product-form')) {
                 )
                 this.cartNotification =
                     document.querySelector('cart-notification')
+                this.cartItems = document.querySelector('cart-items')
             }
 
             onSubmitHandler(evt) {
@@ -34,6 +35,7 @@ if (!customElements.get('product-form')) {
                     })
                     .then((parsedState) => {
                         console.log(parsedState)
+                        this.cartItems.onCartUpdate()
                         this.cartNotification.renderContents(parsedState)
                     })
                     .catch((e) => {

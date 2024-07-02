@@ -7,10 +7,44 @@ class CartItems extends HTMLElement {
         }, 300)
 
         this.addEventListener('change', this.debouncedOnChange.bind(this))
+        this.querySelector('#remove-btn').addEventListener(
+            'click',
+            this.onCartDelete.bind(this)
+        )
     }
 
     onChange(event) {
         this.updateQuantity(event.target.dataset.index, event.target.value)
+    }
+
+    onCartUpdate() {
+        fetch(`${window.Shopify.routes.root}?section_id=main-cart`)
+            .then((response) => response.text())
+            .then((responseText) => {
+                const html = new DOMParser().parseFromString(
+                    responseText,
+                    'text/html'
+                )
+                const targetElement = document.querySelector('cart-items')
+                const sourceElement = html.querySelector('cart-items')
+                if (targetElement && sourceElement) {
+                    targetElement.replaceWith(sourceElement)
+                }
+            })
+            .catch((e) => {
+                console.error(e)
+            })
+    }
+
+    onCartDelete() {
+        const config = fetchConfig('javascript')
+        config.headers['X-Requested-With'] = 'XMLHttpRequest'
+        delete config.headers['Content-Type']
+        fetch(`${window.Shopify.routes.root}cart/clear.js`, config)
+            .then(() => this.onCartUpdate())
+            .catch((e) => {
+                console.error(e)
+            })
     }
 
     updateQuantity(line, quantity) {
@@ -23,19 +57,8 @@ class CartItems extends HTMLElement {
             ...fetchConfig(),
             ...{ body },
         })
-            .then((response) => {
-                return response.text()
-            })
-            .then((state) => {
-                const { item_count, total_price, items } = JSON.parse(state)
-                document.getElementById('cart__item-count').innerHTML =
-                    item_count
-                document.getElementById('cart__total-price').innerHTML =
-                    `$${Math.floor(total_price / 100).toLocaleString()}`
-                if (Number(quantity) === 0) {
-                    document.getElementById(`cart-item-${line}`).remove()
-                    console.log(quantity === 0)
-                }
+            .then(() => {
+                this.onCartUpdate()
             })
             .catch((err) => console.log(err))
     }

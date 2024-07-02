@@ -1,0 +1,116 @@
+<script src='{{ 'cart.js' | asset_url }}' defer='defer'></script>
+
+<cart-items>
+    <div
+        x-cloak
+        x-show='cartModal'
+        class='relative z-20'
+        aria-labelledby='modal-title'
+        role='dialog'
+        aria-modal='true'
+    >
+        <div class='fixed inset-0 bg-black bg-opacity-40 transition-opacity' aria-hidden='true'></div>
+
+        <div class='container absolute left-0 top-full flex w-full justify-center overflow-y-auto md:justify-end'>
+            <div class='w-[20.5rem] md:w-[23.5625rem]'>
+                <div class='mt-6 rounded-lg bg-white p-8'>
+                    {% if cart.item_count > 0 %}
+                        <div class='flex justify-between'>
+                            <h1 class='text-lg font-bold uppercase'>
+                                Cart (<span id='cart__item-count'>{{ cart.item_count }}</span>)
+                            </h1>
+                            <button
+                                id='remove-btn'
+                                class='text-[0.9375rem] font-medium text-black/50 underline hover:text-[#D87D4A]'
+                            >
+                                Remove all
+                            </button>
+                        </div>
+                        <form
+                            action='{{ routes.cart_url }}'
+                            method='POST'
+                            novalidate
+                            class='mt-8 space-y-2'
+                        >
+                            {% for item in cart.items %}
+                                <div
+                                    id='cart-item-{{ item.index | plus: 1 }}'
+                                    class='flex items-center'
+                                >
+                                    <img
+                                        class='h-16 w-16 rounded-lg'
+                                        src='{{ item.image |  image_url  }}'
+                                        alt=''
+                                        width=''
+                                        height=''
+                                    >
+                                    <div class='ml-4 w-full'>
+                                        <h1 class='text-[0.9375rem] font-bold uppercase'>
+                                            {% assign title = item.product.title | downcase | split: ' ' %}
+                                            {% if title.last == 'headphones' %}
+                                                {{ item.product.title | downcase | remove: 'headphones' }}
+                                            {% elsif title.last == 'earphones' %}
+                                                {{ item.product.title | downcase | remove: 'wireless earphones' }}
+                                            {% else %}
+                                                {{ item.product.title }}
+                                            {% endif %}
+                                        </h1>
+                                        <p class='text-sm font-bold text-black/50'>
+                                            {{ item.variant.title }}
+                                        </p>
+                                        <p class='text-sm font-bold text-black/50'>
+                                            {{ item.final_price | money_without_trailing_zeros }}
+                                        </p>
+                                    </div>
+                                    <div class='flex w-auto justify-end'>
+                                        <quantity-input class='flex h-8 w-24 items-center justify-around bg-[#F1F1F1]'>
+                                            <button
+                                                type='button'
+                                                name='minus'
+                                                class='w-4 text-center text-[0.8125rem] font-bold text-black/25'
+                                            >
+                                                -
+                                            </button>
+                                            <input
+                                                type='number'
+                                                name='quantity'
+                                                name='updates[]'
+                                                id='updates_{{ forloop.index }}'
+                                                min='0'
+                                                value='{{ item.quantity }}'
+                                                class='flex w-8 bg-transparent text-center'
+                                                data-index='{{ item.index | plus: 1 }}'
+                                            >
+                                            <button
+                                                type='button'
+                                                name='plus'
+                                                class='w-4 text-center text-[0.8125rem] font-bold text-black/25'
+                                            >
+                                                +
+                                            </button>
+                                        </quantity-input>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class='mt-8 flex justify-between'>
+                                <p class='text-[0.9375rem] font-medium uppercase text-black/50'>Total</p>
+                                <p id='cart__total-price' class='text-lg font-bold'>
+                                    {{ cart.total_price | money_without_trailing_zeros }}
+                                </p>
+                            </div>
+                            <button
+                                type='submit'
+                                name='checkout'
+                                class='mt-6 flex w-full justify-center bg-[#D87D4A] py-4 text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:bg-[#FBAF85]'
+                            >
+                                checkout
+                            </button>
+                        </form>
+                    {% else %}
+                        <div class='flex items-center justify-center text-lg font-bold uppercase'>cart empty</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</cart-items>

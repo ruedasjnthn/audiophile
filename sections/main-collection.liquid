@@ -3,13 +3,13 @@
         {% assign is_even = forloop.index | modulo: 2 %}
         <div class='lg:flex lg:items-center lg:justify-between {% if is_even == 0 %}lg:flex-row-reverse{% endif %}'>
             <img
-                class='h-[22rem] w-full rounded-lg lg:h-[35rem] lg:w-[33.75rem]'
+                class='h-[22rem] w-full rounded-lg lg:h-[35rem] lg:w-2/4 xl:w-[33.75rem]'
                 src='{{ product.featured_image |  image_url  }}'
                 alt=''
                 width=''
                 height=''
             >
-            <div class='mx-auto mt-8 flex flex-col items-center text-center md:mt-[3.25rem] md:w-[35.75rem] lg:mx-0 lg:mt-0 lg:w-[27.8125rem] lg:items-start lg:text-left'>
+            <div class='mx-auto mt-8 flex flex-col items-center text-center md:mt-[3.25rem] md:w-[35.75rem] lg:mx-0 lg:mt-0 lg:w-[25.8125rem] lg:items-start lg:text-left xl:w-[27.8125rem]'>
                 {% if product.tags contains 'new' %}
                     <h2 class='mb-6 text-sm uppercase tracking-[0.7em] text-[#D87D4A] md:mb-4 lg:text-base'>
                         New Product

@@ -25,23 +25,19 @@
                             >
                             <div class='min-w-max pl-4'>
                                 <h1 id='cart-notif__title' class='text-[0.9375rem] font-bold'></h1>
+                                <p id='cart-notif__variant' class='text-sm font-bold'></p>
                                 <p id='cart-notif__price' class='text-sm font-bold'></p>
                             </div>
                             <p class='w-full pl-4 text-right text-[0.9375rem] font-bold' id='cart-notif__quantity'></p>
                         </div>
                         <div>
-                            <div class='mt-6 flex gap-x-4'>
+                            <div class='mt-6 flex'>
                                 <button
                                     type='button'
-                                    class='mx-auto w-1/2 bg-black py-4 text-[0.8125rem] font-bold uppercase text-white hover:cursor-pointer hover:bg-[#4C4C4C]'
+                                    class='mx-auto w-full border border-black bg-transparent py-4 text-center text-[0.8125rem] text-sm font-bold uppercase hover:cursor-pointer hover:bg-black hover:text-white'
                                 >
                                     close
                                 </button>
-                                <a
-                                    href='{{ routes.cart_url }}'
-                                    class='mx-auto w-1/2 border border-black bg-transparent py-4 text-center text-[0.8125rem] text-sm font-bold uppercase hover:cursor-pointer hover:bg-black hover:text-white'
-                                    >Cart</a
-                                >
                             </div>
 
                             <form action='{{ routes.cart_url }}' method='post' id='cart'>
